@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qinguoy.SimpleApp", "qinguoy.SimpleApp\qinguoy.SimpleApp.csproj", "{D61987F7-3709-48B0-B128-44F08D7F5945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qinguoy.simple.RedisCommon", "qinguoy.simple.RedisCommon\qinguoy.simple.RedisCommon.csproj", "{BA73F7C1-D0B3-43E3-8B7A-F86011B4D78D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D61987F7-3709-48B0-B128-44F08D7F5945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61987F7-3709-48B0-B128-44F08D7F5945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61987F7-3709-48B0-B128-44F08D7F5945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61987F7-3709-48B0-B128-44F08D7F5945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA73F7C1-D0B3-43E3-8B7A-F86011B4D78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA73F7C1-D0B3-43E3-8B7A-F86011B4D78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA73F7C1-D0B3-43E3-8B7A-F86011B4D78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA73F7C1-D0B3-43E3-8B7A-F86011B4D78D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89A844F4-1461-4315-AC51-38C35196B660}
+	EndGlobalSection
+EndGlobal
