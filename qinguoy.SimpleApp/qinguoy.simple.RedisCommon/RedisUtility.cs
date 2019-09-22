@@ -2,6 +2,8 @@
 using System;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace qinguoy.simple.RedisCommon
 {
@@ -26,9 +28,40 @@ namespace qinguoy.simple.RedisCommon
         {
 
             connectionMultiplexer = ConnectionMultiplexer.Connect(connectionString);
+            connectionMultiplexer.ErrorMessage += ConnectionMultiplexer_ErrorMessage;
+            connectionMultiplexer.ConnectionFailed += ConnectionMultiplexer_ConnectionFailed;
+            connectionMultiplexer.ConfigurationChanged += ConnectionMultiplexer_ConfigurationChanged;
+            connectionMultiplexer.ConnectionRestored += ConnectionMultiplexer_ConnectionRestored;
+            connectionMultiplexer.InternalError += ConnectionMultiplexer_InternalError;
             dataBase = connectionMultiplexer.GetDatabase();
 
         }
+
+        private void ConnectionMultiplexer_InternalError(object sender, InternalErrorEventArgs e)
+        {
+            //TODO write log
+        }
+
+        private void ConnectionMultiplexer_ConnectionRestored(object sender, ConnectionFailedEventArgs e)
+        {
+            //TODO write log
+        }
+
+        private void ConnectionMultiplexer_ConfigurationChanged(object sender, EndPointEventArgs e)
+        {
+            //TODO write log
+        }
+
+        private void ConnectionMultiplexer_ConnectionFailed(object sender, ConnectionFailedEventArgs e)
+        {
+            //TODO write log
+        }
+
+        private void ConnectionMultiplexer_ErrorMessage(object sender, RedisErrorEventArgs e)
+        {
+            //TODO write log
+        }
+
         /// <summary>
         /// 单例
         /// </summary>
@@ -69,7 +102,7 @@ namespace qinguoy.simple.RedisCommon
         /// <returns></returns>
         public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
-           return await dataBase.StringSetAsync(key, value, expiry); 
+            return await dataBase.StringSetAsync(key, value, expiry);
         }
         /// <summary>
         /// 储存对象
@@ -95,7 +128,7 @@ namespace qinguoy.simple.RedisCommon
         public async Task<bool> StringSetAync<T>(string key, T t, TimeSpan? expiry = default(TimeSpan?))
         {
             string objJsonString = JsonConvert.SerializeObject(t);
-            return await dataBase.StringSetAsync(key,objJsonString,expiry);
+            return await dataBase.StringSetAsync(key, objJsonString, expiry);
 
         }
         /// <summary>
@@ -107,6 +140,7 @@ namespace qinguoy.simple.RedisCommon
         {
             return dataBase.StringGet(key);
         }
+      
         /// <summary>
         /// 获取string
         /// </summary>
@@ -144,7 +178,7 @@ namespace qinguoy.simple.RedisCommon
             {
                 return default(T);
             }
-            string objString = await dataBase.StringGetAsync(key); 
+            string objString = await dataBase.StringGetAsync(key);
             return JsonConvert.DeserializeObject<T>(objString);
         }
         /// <summary>
@@ -155,6 +189,27 @@ namespace qinguoy.simple.RedisCommon
         public bool KeyDelete(string key)
         {
             return dataBase.KeyDelete(key);
+        }
+        public long KeysDelete(List<string> keys) {
+            RedisKey[] redisKeys = ConvertToRedisKeys(keys);
+            return dataBase.KeyDelete(redisKeys);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        public void HashSet(string key, string field, string value)
+        {
+             dataBase.HashSet(key,new HashEntry[] { new HashEntry(field,value) });
+        }
+
+
+        private RedisKey[] ConvertToRedisKeys(List<string> redisKeys)
+        {
+            return redisKeys.Select(redisKey => (RedisKey)redisKey).ToArray();
         }
     }
 }
